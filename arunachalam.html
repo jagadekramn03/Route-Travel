@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Arunachalam Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="stylepages.css"></head>
+
+<body>
+
+<h1>🔥 Arunachalam</h1>
+
+<div class="container">
+<button class="home-btn" onclick="goHome()">🏠</button>
+<img src="arunachalam.jpeg">
+
+<p><b>About:</b> Arunachalam (Tiruvannamalai) is a sacred place dedicated to Lord Shiva as Arunachaleswarar, famous for Girivalam.</p>
+
+<p><b>Best Time:</b> November – March</p>
+
+<p><b>Weather:</b> Hot most of the year</p>
+
+<p><b>Route:</b> Reach Tiruvannamalai → Girivalam (~14 km)</p>
+
+<!-- Distance -->
+<button onclick="getDistance()">📍 From My Location</button>
+<p id="distance"></p>
+
+<h3>Choose Travel Mode</h3>
+
+<button onclick="openRoute('road')">🚗 Road</button>
+<button onclick="openRoute('rail')">🛤️ Railways</button>
+
+<div class="route-box">
+
+<h2>🚗 Travel Routes</h2>
+
+<p><b>✈ Airport:</b> Chennai International Airport</p>
+<button onclick="openFromAirport()">From Airport</button>
+
+<p><b>🚆 Railway:</b> Tiruvannamalai Railway Station</p>
+<button onclick="openFromRail()">From Railway</button>
+
+<p><b>🚌 Bus:</b> Tiruvannamalai Bus Stand</p>
+<button onclick="openFromBus()">From Bus Stand</button>
+
+</div>
+
+<a href="arunachalamhistory.html">
+<button class="history-btn">🕘 View History</button>
+</a>
+
+<a href="arunachalamplaces.html">
+<button class="history-btn">📍 Places to See</button>
+</a>
+
+<p>If you already visited, help others and us 🙌</p>
+
+<a href="feedback.html">
+<button class="history-btn">📝 Share Experience</button>
+</a>
+
+</div>
+
+<script>
+
+let destination = "Arunachalam Tiruvannamalai";
+
+// 📍 Get distance
+function getDistance(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(position){
+
+      let userLat = position.coords.latitude;
+      let userLon = position.coords.longitude;
+
+      // Arunachalam coordinates
+      let destLat = 12.2253;
+      let destLon = 79.0747;
+
+      let distance = calculateDistance(userLat, userLon, destLat, destLon);
+
+      document.getElementById("distance").innerHTML =
+      "Distance: " + distance.toFixed(2) + " km";
+    });
+  } else {
+    alert("Geolocation not supported");
+  }
+}
+// 🚗 🚆 🛫 route
+function openRoute(type){
+if(navigator.geolocation){
+navigator.geolocation.getCurrentPosition(function(position){
+let userLat = position.coords.latitude;
+let userLon = position.coords.longitude;
+
+let mode = "driving";
+
+if(type === "rail"){
+mode = "transit";
+}
+
+let url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=${destination}&travelmode=${mode}`;
+
+window.open(url,"_blank");
+});
+}
+}
+
+// ✈ Airport
+function openFromAirport(){
+window.open("https://www.google.com/maps/dir/Chennai+International+Airport/Arunachalam+Temple","_blank");
+}
+
+// 🚆 Railway
+function openFromRail(){
+window.open("https://www.google.com/maps/dir/Tiruvannamalai+Railway+Station/Arunachalam+Temple","_blank");
+}
+
+// 🚌 Bus
+function openFromBus(){
+window.open("https://www.google.com/maps/dir/Tiruvannamalai+Bus+Stand/Arunachalam+Temple","_blank");
+}
+function calculateDistance(lat1, lon1, lat2, lon2){
+  let R = 6371;
+
+  let dLat = (lat2 - lat1) * Math.PI/180;
+  let dLon = (lon2 - lon1) * Math.PI/180;
+
+  let a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI/180) *
+    Math.cos(lat2 * Math.PI/180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+  return R * c;
+}
+function goHome(){
+  window.location.href = "home.html";
+}
+
+</script>
+
+</body>
+</html>

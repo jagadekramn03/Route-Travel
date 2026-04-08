@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Share Experience</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  font-family:Arial;
+ background-image: url('back.png');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+  text-align:center;
+  margin:0; 
+}
+
+/* CONTAINER */
+.container{
+  background:white;
+  width:90%;           
+  max-width:700px;     
+  margin:20px auto;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h1{
+  color:#2E8B57;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  font-weight:bold;
+  text-align:left;
+  width:90%;           
+  max-width:500px;    
+  margin-left:auto;
+  margin-right:auto;
+}
+
+input,select,textarea{
+  width:90%;           
+  max-width:500px;
+  padding:10px;
+  margin-top:5px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+
+.option-group{
+  width:90%;
+  max-width:500px;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.option-group label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:5px 0;
+  font-weight:normal;
+  width:auto;
+}
+
+
+button{
+  width:90%;          
+  max-width:250px;
+  margin-top:20px;
+  padding:10px;
+  border:none;
+  border-radius:20px;
+  background:#2E8B57;
+  color:white;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1F6B45;
+}
+
+@media (max-width:600px){
+
+  h1{
+    font-size:22px;
+  }
+
+  .container{
+    width:95%;
+    padding:15px;
+  }
+
+  input,select,textarea{
+    width:100%;
+    font-size:14px;
+  }
+
+  label{
+    width:100%;
+    font-size:14px;
+  }
+
+  .option-group{
+    width:100%;
+  }
+
+  button{
+    width:100%;
+    font-size:14px;
+  }
+
+}
+
+@media (min-width:601px) and (max-width:900px){
+
+  .container{
+    width:85%;
+  }
+
+}
+</style>
+</head>
+<body>
+<h1>📝 Share Your Experience</h1>
+<div class="container">
+<form onsubmit="return validateForm()">
+<label>📍 Place Visited</label>
+<input type="text" id="place" placeholder="Enter place name">
+<label>📅 When did you visit?</label>
+<input type="date" id="date">
+<label>⭐ Overall Experience</label>
+<div class="option-group">
+<label><input type="radio" name="exp" value="Excellent">Excellent</label>
+<label><input type="radio" name="exp" value="Good">Good</label>
+<label><input type="radio" name="exp" value="Average">Average</label>
+<label><input type="radio" name="exp" value="Bad">Bad</label>
+</div>
+<label>👨‍👩‍👧 Travel Type</label>
+<select id="travel">
+<option value="">Select</option>
+<option>Family</option>
+<option>Friends</option>
+<option>Solo</option>
+</select>
+<label>⚠ Difficulties Faced</label>
+<div class="option-group">
+<label><input type="checkbox">Language</label>
+<label><input type="checkbox">Transport</label>
+<label><input type="checkbox">Weather</label>
+<label><input type="checkbox">Food</label>
+<label><input type="checkbox">Crowd</label>
+</div>
+<label>💰 Budget Range</label>
+<select>
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+<label>💡 Suggestions</label>
+<textarea id="suggestion" placeholder="Your tips for others..."></textarea><br>
+<button type="submit">Submit</button>
+</form>
+<br>
+<a href="home.html"><button> 🏠︎ Home </button></a>
+</div>
+<script>
+function validateForm(){
+let place=document.getElementById("place").value;
+let date=document.getElementById("date").value;
+let travel=document.getElementById("travel").value;
+let suggestion=document.getElementById("suggestion").value;
+let exp=document.getElementsByName("exp");
+let expSelected=false;
+for(let i=0;i<exp.length;i++){if(exp[i].checked){expSelected=true;}}
+if(place.trim()===""){alert("Please enter place visited");return false;}
+if(date===""){alert("Please select date of visit");return false;}
+if(!expSelected){alert("Please select your experience");return false;}
+if(travel===""){alert("Please select travel type");return false;}
+if(suggestion.trim()===""){alert("Please enter your suggestion");return false;}
+alert("Form submitted successfully ✅");return true;
+}
+</script>
+</body>
+</html>

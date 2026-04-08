@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ziro Valley Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="stylepages.css">
+
+</head>
+
+<body>
+
+<h1>🌄 Ziro Valley</h1>
+
+<div class="container">
+
+<button class="home-btn" onclick="goHome()">🏠</button>
+
+<img src="ziro.jpg">
+
+<p><b>About:</b> Ziro Valley is known for green landscapes and Apatani culture.</p>
+
+<p><b>Best Time:</b> March – October</p>
+
+<p><b>Weather:</b> Pleasant and cool</p>
+
+<p><b>Route:</b> Reach Itanagar → Travel 110 km</p>
+
+<button onclick="getDistance()">📍 From My Location</button>
+<p id="distance"></p>
+
+<h3>Choose Travel Mode</h3>
+
+<button onclick="openRoute('road')">🚗 Road</button>
+<button onclick="openRoute('rail')">🛤️ Railways</button>
+<button onclick="openRoute('air')">🛫 Airways</button>
+
+<div class="route-box">
+
+<h2>🚗 Travel Routes</h2>
+
+<p><b>✈ Airport:</b> Donyi Polo Airport</p>
+<button onclick="openFromAirport()">From Airport</button>
+
+<p><b>🚆 Railway:</b> Naharlagun Station</p>
+<button onclick="openFromRail()">From Railway</button>
+
+<p><b>🚌 Bus:</b> Itanagar Bus Stand</p>
+<button onclick="openFromBus()">From Bus Stand</button>
+
+</div>
+
+<a href="zvalleyhistory.html">
+<button class="history-btn">🕘 View History</button>
+</a>
+
+<a href="zvalleyplaces.html">
+<button class="history-btn">📍 Places to See</button>
+</a>
+
+<p>If you already visited, help others and us 🙌</p>
+
+<a href="feedback.html">
+<button class="history-btn">📝 Share Experience</button>
+</a>
+
+</div>
+
+<script>
+
+let destination = "Ziro Valley Arunachal Pradesh";
+
+function getDistance(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(position){
+      let userLat = position.coords.latitude;
+      let userLon = position.coords.longitude;
+
+      let destLat = 27.5883;
+      let destLon = 93.8269;
+
+      let distance = calculateDistance(userLat, userLon, destLat, destLon);
+
+      document.getElementById("distance").innerHTML =
+      "Distance: " + distance.toFixed(2) + " km";
+    });
+  }
+}
+
+function openRoute(type){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(position){
+      let userLat = position.coords.latitude;
+      let userLon = position.coords.longitude;
+
+      let url = "";
+
+      if(type === "road"){
+        url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=Ziro+Valley&travelmode=driving`;
+      }
+      else if(type === "rail"){
+        url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=Ziro+Valley&travelmode=transit`;
+      }
+      else if(type === "air"){
+        url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=Donyi+Polo+Airport`;
+      }
+
+      window.open(url,"_blank");
+    });
+  }
+}
+
+function openFromAirport(){
+  window.open("https://www.google.com/maps/dir/Donyi+Polo+Airport/Ziro+Valley","_blank");
+}
+
+function openFromRail(){
+  window.open("https://www.google.com/maps/dir/Naharlagun+Railway+Station/Ziro+Valley","_blank");
+}
+
+function openFromBus(){
+  window.open("https://www.google.com/maps/dir/Itanagar+Bus+Stand/Ziro+Valley","_blank");
+}
+
+function calculateDistance(lat1, lon1, lat2, lon2){
+  let R = 6371;
+
+  let dLat = (lat2 - lat1) * Math.PI/180;
+  let dLon = (lon2 - lon1) * Math.PI/180;
+
+  let a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI/180) *
+    Math.cos(lat2 * Math.PI/180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+  return R * c;
+}
+
+function goHome(){
+  window.location.href = "home.html";
+}
+
+</script>
+
+</body>
+</html>

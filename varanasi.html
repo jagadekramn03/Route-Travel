@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Varanasi Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="stylepages.css">
+</head>
+
+<body>
+
+<h1>🛕 Varanasi</h1>
+
+<div class="container">
+
+<button class="home-btn" onclick="goHome()">🏠</button>
+
+<img src="varanasi.jpg">
+
+<p><b>About:</b> Varanasi is one of the oldest cities in the world, famous for Ganga Aarti and spiritual culture.</p>
+
+<p><b>Best Time:</b> October – March</p>
+
+<p><b>Weather:</b> Moderate to hot</p>
+
+<p><b>Route:</b> Reach Varanasi → Explore ghats</p>
+
+<!-- Distance -->
+<button onclick="getDistance()">📍 From My Location</button>
+<p id="distance"></p>
+
+<h3>Choose Travel Mode</h3>
+
+<button onclick="openRoute('road')">🚗 Road</button>
+<button onclick="openRoute('rail')">🛤️ Railways</button>
+<button onclick="openRoute('air')">🛫 Airways</button>
+
+<div class="route-box">
+
+<h2>🚗 Travel Routes</h2>
+
+<p><b>✈ Airport:</b> Lal Bahadur Shastri Airport</p>
+<button onclick="openFromAirport()">From Airport</button>
+
+<p><b>🚆 Railway:</b> Varanasi Junction</p>
+<button onclick="openFromRail()">From Railway</button>
+
+<p><b>🚌 Bus:</b> Varanasi Bus Stand</p>
+<button onclick="openFromBus()">From Bus Stand</button>
+
+</div>
+
+<a href="varanasihistory.html">
+<button class="history-btn">🕘 View History</button>
+</a>
+
+<a href="varanasiplaces.html">
+<button class="history-btn">📍 Places to See</button>
+</a>
+
+<p>If you already visited, help others and us 🙌</p>
+
+<a href="feedback.html">
+<button class="history-btn">📝 Share Experience</button>
+</a>
+
+</div>
+
+<script>
+
+let destination = "Varanasi Uttar Pradesh";
+
+// 📍 Distance
+function getDistance(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(position){
+
+      let userLat = position.coords.latitude;
+      let userLon = position.coords.longitude;
+
+      // Varanasi coordinates
+      let destLat = 25.3176;
+      let destLon = 82.9739;
+
+      let distance = calculateDistance(userLat, userLon, destLat, destLon);
+
+      document.getElementById("distance").innerHTML =
+      "Distance: " + distance.toFixed(2) + " km";
+    });
+  }
+}
+
+// 🚗 / 🚆 route
+function openRoute(type){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(position){
+
+      let userLat = position.coords.latitude;
+      let userLon = position.coords.longitude;
+
+      let url = "";
+
+      // 🚗 Road
+      if(type === "road"){
+        url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=Varanasi&travelmode=driving`;
+      }
+
+      // 🚆 Rail (Transit)
+      else if(type === "rail"){
+        url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=Varanasi&travelmode=transit`;
+      }
+
+      // ✈ Air (User → Nearest Airport → Destination)
+      else if(type === "air"){
+        url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=Lal+Bahadur+Shastri+Airport`;
+      }
+
+      window.open(url, "_blank");
+    });
+  }
+}
+
+// ✈ Airport
+function openFromAirport(){
+  window.open("https://www.google.com/maps/dir/Lal+Bahadur+Shastri+Airport/Varanasi","_blank");
+}
+
+// 🚆 Railway
+function openFromRail(){
+  window.open("https://www.google.com/maps/dir/Varanasi+Junction/Varanasi","_blank");
+}
+
+// 🚌 Bus
+function openFromBus(){
+  window.open("https://www.google.com/maps/dir/Varanasi+Bus+Stand/Varanasi","_blank");
+}
+
+// Distance formula
+function calculateDistance(lat1, lon1, lat2, lon2){
+  let R = 6371;
+
+  let dLat = (lat2 - lat1) * Math.PI/180;
+  let dLon = (lon2 - lon1) * Math.PI/180;
+
+  let a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI/180) *
+    Math.cos(lat2 * Math.PI/180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+  return R * c;
+}
+
+// Home
+function goHome(){
+  window.location.href = "home.html";
+}
+
+</script>
+
+</body>
+</html>

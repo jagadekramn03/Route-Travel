@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kedarnath Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="stylepages.css">
+
+</head>
+
+<body>
+
+<h1>🛕 Kedarnath</h1>
+
+<div class="container">
+
+<button class="home-btn" onclick="goHome()">🏠</button>
+
+<img src="Kedarnath.jpeg">
+
+<p><b>About:</b> Kedarnath is a sacred temple in the Himalayas.</p>
+
+<p><b>Best Time:</b> May – June, Sep – Oct</p>
+
+<p><b>Weather:</b> Cold and pleasant</p>
+
+<p><b>Route:</b> Reach Gaurikund → Trek 16 km</p>
+
+<!-- Distance -->
+<button onclick="getDistance()">📍 From My Location</button>
+<p id="distance"></p>
+
+<h3>Choose Travel Mode</h3>
+
+<button onclick="openRoute('road')">🚗 Road</button>
+<button onclick="openRoute('rail')">🛤️ Railways</button>
+<button onclick="openRoute('air')">🛫 Airways</button>
+
+<div class="route-box">
+
+<h2>🚗 Travel Routes</h2>
+
+<p><b>✈ Airport:</b> Jolly Grant Airport</p>
+<button onclick="openFromAirport()">From Airport</button>
+
+<p><b>🚆 Railway:</b> Rishikesh Station</p>
+<button onclick="openFromRail()">From Railway</button>
+
+<p><b>🚌 Bus:</b> Gaurikund</p>
+<button onclick="openFromBus()">From Bus Stand</button>
+
+</div>
+
+<a href="kedarnathhistory.html">
+<button class="history-btn">🕘 View History</button>
+</a>
+
+<p>If you already visited, help others and us 🙌</p>
+
+<a href="feedback.html">
+<button class="history-btn">📝 Share Experience</button>
+</a>
+
+</div>
+
+<script>
+
+let destination = "Kedarnath Uttarakhand";
+
+// 📍 Distance
+function getDistance(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(position){
+
+      let userLat = position.coords.latitude;
+      let userLon = position.coords.longitude;
+
+      // Kedarnath coordinates
+      let destLat = 30.7352;
+      let destLon = 79.0669;
+
+      let distance = calculateDistance(userLat, userLon, destLat, destLon);
+
+      document.getElementById("distance").innerHTML =
+      "Distance: " + distance.toFixed(2) + " km";
+    });
+  }
+}
+
+// 🚗 🚆 ✈ route
+function openRoute(type){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(position){
+
+      let userLat = position.coords.latitude;
+      let userLon = position.coords.longitude;
+
+      let url = "";
+
+      if(type === "road"){
+        url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=Kedarnath&travelmode=driving`;
+      }
+      else if(type === "rail"){
+        url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=Kedarnath&travelmode=transit`;
+      }
+      else if(type === "air"){
+        url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLon}&destination=Jolly+Grant+Airport`;
+      }
+
+      window.open(url,"_blank");
+    });
+  }
+}
+
+// ✈ Airport
+function openFromAirport(){
+  window.open("https://www.google.com/maps/dir/Jolly+Grant+Airport/Kedarnath","_blank");
+}
+
+// 🚆 Railway
+function openFromRail(){
+  window.open("https://www.google.com/maps/dir/Rishikesh+Railway+Station/Kedarnath","_blank");
+}
+
+// 🚌 Bus
+function openFromBus(){
+  window.open("https://www.google.com/maps/dir/Gaurikund/Kedarnath","_blank");
+}
+
+// Distance formula
+function calculateDistance(lat1, lon1, lat2, lon2){
+  let R = 6371;
+
+  let dLat = (lat2 - lat1) * Math.PI/180;
+  let dLon = (lon2 - lon1) * Math.PI/180;
+
+  let a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI/180) *
+    Math.cos(lat2 * Math.PI/180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+  return R * c;
+}
+
+// Home
+function goHome(){
+  window.location.href = "home.html";
+}
+
+</script>
+
+</body>
+</html>
