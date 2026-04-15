@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .auth-container{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:url("background1.png") no-repeat center/cover;
+    }
+    .auth-box{
+      background:rgba(0,0,0,0.7);
+      padding:30px;
+      border-radius:15px;
+      color:white;
+      width:300px;
+      text-align:center;
+    }
+    .auth-box input{
+      width:90%;
+      padding:10px;
+      margin:10px 0;
+      border:none;
+      border-radius:5px;
+    }
+    .auth-box button{
+      padding:10px 20px;
+      border:none;
+      border-radius:20px;
+      background:#8B4513;
+      color:white;
+      cursor:pointer;
+    }
+    .auth-box button:hover{
+      background:#D97706;
+    }
+    span{
+      color:red;
+      font-size:12px;
+      display:block;
+      text-align:left;
+      margin-left:10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="auth-container">
+  <div class="auth-box">
+    <h2>Login</h2>
+
+    <form onsubmit="validateLogin(event)">
+      <input type="text" id="username" placeholder="Username">
+      <span id="username-error"></span>
+
+      <input type="password" id="password" placeholder="Password">
+      <span id="password-error"></span>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have account? 
+      <a href="signup.html" style="color:#FFD700;">Sign Up</a>
+    </p>
+  </div>
+</div>
+
+<script>
+function validateLogin(event){
+  event.preventDefault();
+
+  let username = document.getElementById("username").value.trim();
+  let password = document.getElementById("password").value.trim();
+
+  let valid = true;
+
+  document.getElementById("username-error").innerText = "";
+  document.getElementById("password-error").innerText = "";
+
+  if(username === ""){
+    document.getElementById("username-error").innerText = "* Enter username";
+    valid = false;
+  }
+
+  let passPattern = /^(?=.*[!@#$%^&*]).{8,}$/;
+
+  if(password === ""){
+    document.getElementById("password-error").innerText = "* Enter password";
+    valid = false;
+  } else if(!passPattern.test(password)){
+    document.getElementById("password-error").innerText = "* Min 8 chars + 1 special character";
+    valid = false;
+  }
+
+  if(valid){
+    let storedUser = localStorage.getItem("user");
+    let storedPass = localStorage.getItem("pass");
+
+    if(username === storedUser && password === storedPass){
+      alert("✅ Login Successful!");
+      window.location.href = "home.html";
+    } else {
+      document.getElementById("password-error").innerText = "* Invalid username or password";
+    }
+  }
+
+  return false;
+}
+</script>
+
+</body>
+</html>
