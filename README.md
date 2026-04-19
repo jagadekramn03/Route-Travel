@@ -20,5 +20,3 @@ To create a user-friendly travel guide that combines functionality and design, h
 
 🚀 Future Improvements:
 - Wishlist feature
-- Search and filter options
-- User login system
